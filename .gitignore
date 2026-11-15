@@ -1,3 +1,4 @@
 database/*
-
 !database/schema.sql
+src/backend/node_modules
+src/backend/.env
