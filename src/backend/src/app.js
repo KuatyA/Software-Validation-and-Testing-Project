@@ -6,6 +6,8 @@ const app = express();
 const pool = require("./db");
 const studentRoutes = require("./routes/studentRoutes");
 const advisorRoutes = require("./routes/advisorRoutes");
+const groupRoutes = require("./routes/groupRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 
 app.use(express.json());
 
@@ -17,6 +19,8 @@ app.get("/", (req, res) => {
 
 app.use("/students", studentRoutes);
 app.use("/advisors", advisorRoutes);
+app.use("/groups", groupRoutes);
+app.use("/projects", projectRoutes);
 
 app.listen(3000, () => {
     console.log("App Running on port 3000");
