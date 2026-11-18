@@ -44,7 +44,7 @@ const createAGroup = async (group_data) => {
     return result.rows[0];
 }
 const editAGroup = async(group_data, group_id) => {
-    const result = await pool.query("UPDATE project_group SET group_name = $1, group_description = $2 WHERE group_id = $3 RETURNING * ",
+    const result = await pool.query("UPDATE project_group SET group_name = $1, group_advisor = $2, group_project = $3 WHERE group_id = $4 RETURNING * ",
          [group_data.name, group_data.advisor, group_data.project, group_id]);
     return result.rows[0];
 }
