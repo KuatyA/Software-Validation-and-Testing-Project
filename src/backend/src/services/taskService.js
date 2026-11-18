@@ -2,15 +2,15 @@ const express = require("express");
 const pool = require("../db");
 
 const getAllTasks = async () => {
-    const result = await pool.query("SELECT * FROM task_task");
+    const result = await pool.query("SELECT * FROM task");
     return result;
 }
 const getATaskById = async (task_id) => {
-    const result = await pool.query("SELECT * FROM task_task WHERE task_id = $1", [task_id]);
+    const result = await pool.query("SELECT * FROM task WHERE task_id = $1", [task_id]);
     return result.rows[0];
 }
 const getATaskByName = async (task_name) => {
-    const result = await pool.query("SELECT * FROM task_task WHERE task_name = $1", [task_name]);
+    const result = await pool.query("SELECT * FROM task WHERE task_name = $1", [task_name]);
     return result.rows[0];
 }
 
@@ -37,10 +37,10 @@ const getATaskByName = async (task_name) => {
             "task_task":{task_id}
         }'
 */
-const createATask = async (task_data, advisor_id) => {
+const createATask = async (task_data) => {
     //console.log("SERVICE DATA:", task_data);
     const result = await pool.query("INSERT INTO task (task_name, task_assigned_group_id, task_assigned_student_id, task_due_date, task_description, task_status, task_project, created_by) " + 
-                                "VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING * ", [task_data.name, task_data.group, task_data.student, task_data.due_date, task_data.description, task_data.status, task_data.project, advisor_id]);
+                                "VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING * ", [task_data.name, task_data.group, task_data.student, task_data.due_date, task_data.description, task_data.status, task_data.project, task_data.created_by]);
     return result.rows[0];
 }
 const editATask = async(task_data, task_id) => {

@@ -8,6 +8,8 @@ const studentRoutes = require("./routes/studentRoutes");
 const advisorRoutes = require("./routes/advisorRoutes");
 const groupRoutes = require("./routes/groupRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const taskRoutes = require("./routes/taskRoutes");
+const availabilityRoutes = require("./routes/availabilityRoutes");
 
 app.use(express.json());
 
@@ -21,6 +23,8 @@ app.use("/students", studentRoutes);
 app.use("/advisors", advisorRoutes);
 app.use("/groups", groupRoutes);
 app.use("/projects", projectRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/availabilities", availabilityRoutes);
 
 app.listen(3000, () => {
     console.log("App Running on port 3000");
