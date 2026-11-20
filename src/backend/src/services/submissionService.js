@@ -11,8 +11,8 @@ const getASubmissionsByGroup = async(group_id) => {
     return result.rows[0];
 }
 
-const getASubmissionsByTaskId = async(task_id) => {
-    const result = await pool.query("SELECT * FROM submission WHERE submission_task_id = $1", [task_id]);
+const getASubmissionsByTaskId = async(group_id, task_id) => {
+    const result = await pool.query("SELECT * FROM submission WHERE submission_group_id = $1 AND submission_task_id = $2", [group_id, task_id]);
     return result.rows[0];
 }
 

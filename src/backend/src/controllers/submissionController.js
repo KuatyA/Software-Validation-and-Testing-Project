@@ -18,7 +18,7 @@ const getSubmissionByGroupId = async (req, res) => {
 }
 
 const getSubmissionByTaskId = async (req, res) => {
-    const submission = await getASubmissionsByTaskId(req.params.task_id);
+    const submission = await getASubmissionsByTaskId(req.params.group_id, req.params.task_id);
     res.json(submission);
 }
 
