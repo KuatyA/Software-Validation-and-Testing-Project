@@ -3,6 +3,9 @@ const pool = require("../db");
 const { getAllGroups,
         getAGroupById,
         getAGroupByName,
+        getAdvisorOfAGroup,
+        getProjectsOfAGroup,
+        getStudentsOfAGroup,
         createAGroup,
         editAGroup,
         deleteAGroup
@@ -18,6 +21,18 @@ const getGroupById = async(req, res) => {
 }
 const getGroupByName = async(req, res) => {
     const group  = await getAGroupByName(req.body);
+    res.json(group);
+}
+const getGroupStudents = async(req, res) => {
+    const group = await getStudentsOfAGroup(req.params.id);
+    res.json(group);
+}
+const getGroupProject = async(req, res) => {
+    const group = await getProjectsOfAGroup(req.params.id);
+    res.json(group);
+}
+const getGroupAdvisor = async(req, res) => {
+    const group = await getAdvisorOfAGroup(req.params.id);
     res.json(group);
 }
 const createGroup = async(req, res) => {
@@ -37,6 +52,9 @@ module.exports = {
     getGroups,
     getGroupById,
     getGroupByName,
+    getGroupAdvisor,
+    getGroupStudents,
+    getGroupProject,
     createGroup,
     editGroup,
     deleteGroup

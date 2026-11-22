@@ -13,7 +13,18 @@ const getATaskByName = async (task_name) => {
     const result = await pool.query("SELECT * FROM task WHERE task_name = $1", [task_name]);
     return result.rows[0];
 }
-
+const getStudentOfATask = async(student_id) => {
+    const result = pool.query("SELECT * FROM task WHERE task_assigned_student_id = $1", [student_id]);
+    return result;
+}
+const getProjectsOfATask = async(project_id) => {
+    const result = pool.query("SELECT * FROM task WHERE task_project = $1", [project_id]);
+    return result;
+}
+const getGroupOfATask = async(group_id) => {
+    const result = pool.query("SELECT * FROM task WHERE task_assigned_group_id = $1", [group_id]);
+    return result;
+}
 //for now, no frontend exists so the way to add a task is to use:
 /*
 
@@ -48,6 +59,10 @@ const editATask = async(task_data, task_id) => {
          [task_data.name, task_data.advisor, task_data.task, task_id]);
     return result.rows[0];
 }
+const updateATaskStatus = async(task_status, task_id) => {
+    const result =  await pool.query("UPDATE task SET task_status = $1 WHERE task_id = $2", [task_status, task_id]);
+    return result;
+}
 //for now, no frontend exists so deleting is as follows:
 /*
 -ON LINUX-
@@ -67,6 +82,10 @@ module.exports = {
     getAllTasks,
     getATaskById,
     getATaskByName,
+    getStudentOfATask,
+    getProjectsOfATask,
+    getGroupOfATask,
+    updateATaskStatus,
     createATask,
     editATask,
     deleteATask

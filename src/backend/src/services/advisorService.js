@@ -29,7 +29,7 @@ const editAnAdvisor = async(advisor_data, advisor_id) => {
     return result.rows[0];
 }
 //check studentServices.js for how to delete with an http request
-const deleteAnAdvisor =  async(advisor_id) => {
+const deleteAnAdvisor = async(advisor_id) => {
     const result = await pool.query("DELETE FROM advisor WHERE advisor_id = $1 RETURNING * ", [advisor_id]);
     return result.rows[0];
 }
@@ -39,5 +39,5 @@ module.exports = {
     getAnAdvisorByName,
     createAnAdvisor,
     deleteAnAdvisor,
-    editAnAdvisor
+    editAnAdvisor,
 }

@@ -4,14 +4,18 @@ const { getAllAvailableMeetingTimes,
         getAllAvailableTimeByAdvisorId,
         createAnAvailability,
         editAnAvailability,
-        deleteAnAvailability
+        deleteAnAvailability,
+        getAnAvailabilityById
 } = require("../services/availabilityService");
 
 const getAvailableTimes = async(req, res) => {
     const availability = await getAllAvailableMeetingTimes();
     res.json(availability);
 }
-
+const getAvailibilityById = async(req, res) => {
+    const availability = await getAnAvailabilityById(req.params.availability_id);
+    res.json(availability);
+}
 const getAvailableTimeByAdvisor = async (req, res) => {
     const availability = await getAllAvailableTimeByAdvisorId(req.params.id);
     res.json(availability);
@@ -34,5 +38,6 @@ module.exports = {
     getAvailableTimeByAdvisor,
     createAvailability,
     editAvailability,
-    deleteAvailability
+    deleteAvailability,
+    getAvailibilityById
 }

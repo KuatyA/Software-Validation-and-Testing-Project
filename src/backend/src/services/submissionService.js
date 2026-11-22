@@ -5,7 +5,10 @@ const getAllSubmissions = async() => {
     const result = await pool.query("SELECT * FROM submission");
     return result;
 }
-
+const getASubmissionById = async(submission_id) => {
+    const result = await pool.query("SELECT * FROM submission WHERE submission_id = $1", [submission_id]);
+    return result;
+}
 const getASubmissionsByGroup = async(group_id) => {
     const result = await pool.query("SELECT * FROM submission WHERE submission_group_id = $1", [group_id]);
     return result.rows[0];
@@ -16,14 +19,14 @@ const getASubmissionsByTaskId = async(group_id, task_id) => {
     return result.rows[0];
 }
 
-const createASubmission = async(submission_data, group_id, task_id) => {
+const createASubmission = async(submission_data) => {
     const result = await pool.query("INSERT INTO submission (submission_task_id, submission_group_id, file_path, submission_status, uploaded_by, version_no)" + 
-        "VALUES($1, $2, $3, $4, $5, $6) RETURNING *", [task_id, group_id, submission_data.file_path, submission_data.status, submission_data.uploaded_by, submission_data.version_no]);
+        "VALUES($1, $2, $3, $4, $5, $6) RETURNING *", [submission_data.task, submission_data.group, submission_data.file_path, submission_data.status, submission_data.uploaded_by, submission_data.version_no]);
     return result.rows[0];
 }
 
-const editASubmission = async(new_submission_data, group_id, task_id) => {
-    const old_data = await pool.query("SELECT * FROM submission WHERE submission_group_id = $1 AND submission_task_id = $2 ORDER BY version_no DESC LIMIT 1", [group_id, task_id]);
+const editASubmission = async(new_submission_data, submission_id) => {
+    const old_data = await pool.query("SELECT * FROM submission WHERE submission_id = $1 ORDER BY version_no DESC LIMIT 1", [submission_id]);
     const latestSubmission = old_data.rows[0];
     const newVersion = latestSubmission.version_no + 1;
     const result = await pool.query("INSERT INTO submission (submission_task_id, submission_group_id, file_path, submission_status, uploaded_by, version_no)" + 
@@ -41,6 +44,7 @@ const editASubmission = async(new_submission_data, group_id, task_id) => {
 module.exports = {
     getASubmissionsByGroup,
     getASubmissionsByTaskId,
+    getASubmissionById,
     getAllSubmissions,
     createASubmission,
     editASubmission

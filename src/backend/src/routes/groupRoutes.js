@@ -7,19 +7,24 @@ const {getGroupByName} = require("../controllers/groupController");
 const { createGroup } = require("../controllers/groupController");
 const { deleteGroup } = require("../controllers/groupController");
 const { editGroup } = require("../controllers/groupController");
-const { seeGroupMeeting,
-        createMeeting
- } = require("../controllers/meetingController");
+const { getGroupAdvisor, getGroupProject, getGroupStudents
+ } = require("../controllers/groupController");
 
+//GET
 router.get("/", getGroups);
-router.post("/", createGroup);
-router.put("/:id", editGroup);
-router.get("/search", getGroupByName);
-router.get("/:group_id/meetings", seeGroupMeeting);
-router.post("/:group_id/meetings", createMeeting);
 router.get("/:id", getGroupById);
+router.get("/search", getGroupByName);
+router.get("/:id/students", getGroupStudents);
+router.get("/:id/project", getGroupProject);
+router.get("/:id/advisor", getGroupAdvisor);
+
+//POST
+router.post("/", createGroup);
+
+//PUT
+router.put("/:id", editGroup);
+
+//DELETE
 router.delete("/:id", deleteGroup);
-
-
 
 module.exports = router;

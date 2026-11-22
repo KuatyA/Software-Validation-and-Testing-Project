@@ -8,11 +8,18 @@ const { createProject } = require("../controllers/projectController");
 const { deleteProject } = require("../controllers/projectController");
 const { editProject } = require("../controllers/projectController");
 
+//GET
 router.get("/", getProjects);
-router.post("/", createProject);
-router.put("/:id", editProject);
-router.get("/search", getProjectByName);
 router.get("/:id", getProjectById);
+router.get("/search", getProjectByName);
+
+//POST
+router.post("/", createProject);
+
+//PUT
+router.put("/:id", editProject);
+
+//DELETE
 router.delete("/:id", deleteProject);
 
 

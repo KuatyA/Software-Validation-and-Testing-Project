@@ -8,11 +8,18 @@ const { createStudent } = require("../controllers/studentController");
 const { deleteStudent } = require("../controllers/studentController");
 const { editStudent } = require("../controllers/studentController");
 
+//GET
 router.get("/", getStudents);
-router.post("/", createStudent);
-router.put("/:id", editStudent);
-router.get("/search", getStudentByName);
 router.get("/:id", getStudentById);
+router.get("/search", getStudentByName);
+
+//POST
+router.post("/", createStudent);
+
+//PUT
+router.put("/:id", editStudent);
+
+//DELETE
 router.delete("/:id", deleteStudent);
 
 

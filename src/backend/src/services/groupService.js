@@ -13,6 +13,18 @@ const getAGroupByName = async (group_name) => {
     const result = await pool.query("SELECT * FROM project_group WHERE group_name = $1", [group_name]);
     return result.rows[0];
 }
+const getStudentsOfAGroup = async(group_id) => {
+    const result = pool.query("SELECT * FROM student WHERE student_group_id = $1", [group_id]);
+    return result;
+}
+const getProjectsOfAGroup = async(project_id) => {
+    const result = pool.query("SELECT p.* FROM project p JOIN project_group pg ON p.project_id = $1", [project_id]);
+    return result;
+}
+const getAdvisorOfAGroup = async(advisor_id) => {
+    const result = pool.query("SELECT a.* FROM advisor a JOIN project_group pg ON a.advisor_id = $1", [advisor_id]);
+    return result;
+}
 
 //for now, no frontend exists so the way to add a group is to use:
 /*
@@ -69,5 +81,8 @@ module.exports = {
     getAGroupByName,
     createAGroup,
     editAGroup,
-    deleteAGroup
+    deleteAGroup,
+    getStudentsOfAGroup,
+    getProjectsOfAGroup,
+    getAdvisorOfAGroup
 };

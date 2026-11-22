@@ -1,13 +1,7 @@
 const express = require("express");
 const pool = require("../db");
 
-const  seeFeedback = async(group_id, task_id, submission_id) => {
-    const feedback_related_info = pool.query("SELECT * FROM submission WHERE submission_group_id = $1 AND submission_task_id = $2", [group_id, task_id]);
-    if(feedback_related_info.submission_id != submission_id){
-        throw new Error(
-            "Provided submission ID: ${submission_id} does not match any of the submission ID " + 
-            "of group:${group_id} and task:${task_id}!");
-    }
+const  seeFeedback = async(submission_id) => {
     const result = pool.query("SELECT * FROM feedback WHERE feedback_submission_id = $1", [submission_id])
     return result;
 }

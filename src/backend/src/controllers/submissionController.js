@@ -2,6 +2,7 @@ const pool = require("../db");
 
 const { getASubmissionsByGroup,
         getASubmissionsByTaskId,
+        getASubmissionById,
         getAllSubmissions,
         createASubmission,
         editASubmission
@@ -11,31 +12,38 @@ const getSubmissions = async (req, res) => {
     const submission = await getAllSubmissions();
     res.json(submission);
 }
-
+const getSubmissionById = async (req, res) => {
+    const submission = await getASubmissionById(req.params.submission_id);
+    res.json(submission);
+}
 const getSubmissionByGroupId = async (req, res) => {
-    const submission = await getASubmissionsByGroup(req.params.group_id);
+    const id = req.query.group_id;
+    const submission = await getASubmissionsByGroup(id);
     res.json(submission);
 }
 
-const getSubmissionByTaskId = async (req, res) => {
-    const submission = await getASubmissionsByTaskId(req.params.group_id, req.params.task_id);
+const getSubmissionByTaskAndGroupId = async (req, res) => {
+    const task_id = req.query.task_id;
+    const group_id = req.query.group_id;
+    const submission = await getASubmissionsByTaskId(group_id, task_id);
     res.json(submission);
 }
 
 const createSubmission = async (req, res) => {
-    const submission = await createASubmission(req.body, req.params.group_id, req.params.task_id);
+    const submission = await createASubmission(req.body);
     res.json(submission);
 }
 
 const editSubmission = async (req, res) => {
-    const submission = await editASubmission(req.body, req.params.group_id, req.params.task_id);
+    const submission = await editASubmission(req.body, req.params.submission_id);
     res.json(submission);
 }
 
 module.exports = {
     getSubmissions,
     getSubmissionByGroupId,
-    getSubmissionByTaskId,
+    getSubmissionById,
+    getSubmissionByTaskAndGroupId,
     createSubmission,
     editSubmission
 }

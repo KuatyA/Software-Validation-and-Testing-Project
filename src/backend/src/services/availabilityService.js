@@ -5,6 +5,10 @@ const getAllAvailableMeetingTimes = async () => {
     const result = await pool.query("SELECT * FROM advisor_availability");
     return result;
 }
+const getAnAvailabilityById = async(availability_id) => {
+    const result = await pool.query("SELECT * FROM advisor_availability WHERE availability_id = $1", [availability_id]);
+    return result;
+}
 const getAllAvailableTimeByAdvisorId = async (advisor_id) => {
     const result = await pool.query("SELECT * FROM advisor_availability WHERE availability_advisor_id = $1", [advisor_id]);
     return result.rows[0];
@@ -54,5 +58,6 @@ module.exports = {
     getAllAvailableTimeByAdvisorId,
     createAnAvailability,
     editAnAvailability,
-    deleteAnAvailability
+    deleteAnAvailability,
+    getAnAvailabilityById
 };

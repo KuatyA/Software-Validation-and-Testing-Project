@@ -2,16 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 const { getAvailableTimes,
-        getAvailableTimeByAdvisor,
         createAvailability,
         editAvailability,
-        deleteAvailability
+        deleteAvailability,
+        getAvailibilityById
 } = require("../controllers/availabilityController");
 
+//GET
 router.get("/", getAvailableTimes);
-router.put("/:advisor_id/:id", editAvailability);
-router.post("/:advisor_id/", createAvailability);
-router.get("/:advisor_id", getAvailableTimeByAdvisor);
+router.get("/:id", getAvailibilityById);
+//POST
+router.post("/:id", createAvailability);
+
+//PUT
+router.put("/:id", editAvailability);
+
+//DELETE
 router.delete("/:id", deleteAvailability);
 
 module.exports = router;

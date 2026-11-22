@@ -8,8 +8,7 @@ const {
 } = require("../services/feedbackService");
 
 const seeSubmissionFeedback = async(req, res) => {
-    const feedback = await seeFeedback(req.params.group_id,
-        req.params.task_id, req.params.submission_id);
+    const feedback = await seeFeedback(req.params.submission_id);
     res.json(feedback);
 }
 

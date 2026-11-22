@@ -11,6 +11,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const submissionRoutes = require("./routes/submissionRoutes");
+const meetingRoutes = require("./routes/meetingRoutes");
 
 app.use(express.json());
 
@@ -27,6 +28,7 @@ app.use("/projects", projectRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/availabilities", availabilityRoutes);
 app.use("/submissions", submissionRoutes);
+app.use("/meetings", meetingRoutes);
 
 
 app.listen(3000, () => {
