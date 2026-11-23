@@ -30,7 +30,8 @@ const getSubmissionByTaskAndGroupId = async (req, res) => {
 }
 
 const createSubmission = async (req, res) => {
-    const submission = await createASubmission(req.body);
+    const filePath = req.file.path;
+    const submission = await createASubmission({...req.body, file_path: filePath});
     res.json(submission);
 }
 

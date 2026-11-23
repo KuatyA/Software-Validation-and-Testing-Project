@@ -53,11 +53,16 @@ const deleteAnAvailability =  async(availability_id) => {
     const result = await pool.query("DELETE FROM advisor_availability WHERE availability_id = $1 RETURNING * ", [availability_id]);
     return result.rows[0];
 }
+const bookAvailabilty = async(availability_id) => {
+    const result = await pool.query("UPDATE advisor_availability SET is_booked = true");
+    return result;
+}
 module.exports = {
     getAllAvailableMeetingTimes,
     getAllAvailableTimeByAdvisorId,
     createAnAvailability,
     editAnAvailability,
     deleteAnAvailability,
-    getAnAvailabilityById
+    getAnAvailabilityById,
+    bookAvailabilty
 };

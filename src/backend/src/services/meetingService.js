@@ -1,6 +1,8 @@
 const express = require("express");
 const pool = require("../db");
 
+const { getAnAvailabilityById, bookAvailabilty } = require("../services/availabilityService");
+
 const getAllMeetings = async() => {
     const result = await pool.query("SELECT * FROM meeting");
     return result;
@@ -26,6 +28,25 @@ const createAMeeting = async(meeting_data) => {
             "VALUES($1, $2, $3, $4) RETURNING *", [meeting_data.advisor, meeting_data.group, meeting_data.hour, meeting_data.date]);
     return result;
 }
+const requestAMeeting = async(meeting_data) => {
+    const availability = await getAnAvailabilityById(meeting_data.id);
+    if(availability.is_booked == true){
+        throw new Error("Availability is already booked");
+    }
+    await bookAvailabilty(meeting_data.id);
+    const result = createAMeeting({
+        advisor:
+            availability.availability_advisor_id,
+        group:
+            meeting_data.group_id,
+        hour:
+            availability.start_time,
+        date:
+            availability.availability_date
+    });
+    return result.rows[0];
+}
+
 const updateAMeetingStatus = async(meeting_status, meeting_id) => {
     const result = await pool.query("UPDATE meeting SET meetting_status = $1 WHERE meeting_id = $2 RETURNING *", [meeting_status, meeting_id]);
     return result;
@@ -53,5 +74,6 @@ module.exports = {
     updateAMeetingStatus,
     createAMeeting,
     editAMeeting,
-    deleteAMeeting
+    deleteAMeeting,
+    requestAMeeting
 }

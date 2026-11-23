@@ -9,6 +9,8 @@ const { getSubmissionByGroupId,
         editSubmission
 } = require("../controllers/submissionController");
 
+const upload = require("../middleware/uploadMiddleware");
+
 const {
     seeSubmissionFeedback,
     createFeedback,
@@ -24,7 +26,7 @@ router.get("/group", getSubmissionByGroupId);
 router.get("/:id/feedback", seeSubmissionFeedback);
 
 //POST
-router.post("/", createSubmission);
+router.post("/", upload.single("file"), createSubmission);
 router.post("/:id/revisions", editSubmission);
 router.post("/:id/feedback", createFeedback);
 
