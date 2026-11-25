@@ -12,6 +12,7 @@ const taskRoutes = require("./routes/taskRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const submissionRoutes = require("./routes/submissionRoutes");
 const meetingRoutes = require("./routes/meetingRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 app.use(express.json());
 
@@ -29,6 +30,7 @@ app.use("/tasks", taskRoutes);
 app.use("/availabilities", availabilityRoutes);
 app.use("/submissions", submissionRoutes);
 app.use("/meetings", meetingRoutes);
+app.use("/auth", authRoutes);
 
 
 app.listen(3000, () => {
